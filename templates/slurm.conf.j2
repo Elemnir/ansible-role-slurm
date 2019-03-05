@@ -1,0 +1,42 @@
+#
+# {{ ansible_managed }}
+#
+{% for host in slurm_slurmctld_hosts %}
+SlurmctldHost={{ host }}
+{% endfor %}
+
+# 
+# Config Options
+#
+#AuthType=auth/munge
+ClusterName={{ slurm_cluster_name }}
+#Epilog=/usr/local/slurm/etc/epilog
+FastSchedule=1
+JobCompLoc=/var/spool/slurm/slurm.job.log
+JobCompType=jobcomp/filetxt
+JobCredentialPrivateKey=/var/spool/slurm/slurm.key
+JobCredentialPublicCertificate=/var/spool/slurm/slurm.cert
+#Prolog=/usr/local/slurm/etc/prolog
+ProctrackType=proctrack/cgroup
+SchedulerType=sched/backfill
+SelectType=select/linear
+SlurmUser=slurm
+SlurmctldPort=7002
+SlurmctldTimeout=300
+SlurmdPort=7003
+SlurmdSpoolDir=/var/spool/slurm/spool
+SlurmdTimeout=300
+StateSaveLocation=/var/spool/slurm/state
+SwitchType=switch/none
+TreeWidth=50
+
+#
+# Node Configurations
+#
+{{ slurm_node_config }}
+
+#
+# Partition Configurations
+#
+{{ slurm_partition_config }}
+

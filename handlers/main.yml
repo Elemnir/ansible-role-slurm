@@ -1,0 +1,7 @@
+---
+
+- name: Restart slurmctld
+  become: True
+  service:
+    name: slurmctld
+    state: restarted
