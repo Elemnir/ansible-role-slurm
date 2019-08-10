@@ -2,7 +2,7 @@
 
 slurm_munge_key: ""
 
-slurm_repo_url: "https://repos.home.adamphoward.com/slurm/x86_64/"
+slurm_repo_url: "https://repos.adamphoward.com/slurm/x86_64/"
 slurm_repo_gpgurl: ""
 
 slurm_run_slurmd: True
