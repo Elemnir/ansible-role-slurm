@@ -3,6 +3,24 @@
 - become: True
   block: 
 
+  # Build Slurm from source
+  - tags: ['never', 'build-slurm']
+    block:
+    - name: Install packages for the build
+      package:
+        name: "{{ item }}"
+        state: installed
+      with_items: "{{ slurm_build_dependencies }}"
+
+    - name: Download the source tarball
+      get_url:
+        url: "{{ slurm_build_download_url }}"
+        dest: "/var/tmp/slurm.tar.bz2"
+
+    - name: Build the rpms
+      command: "rpmbuild -ta /var/tmp/slurm.tar.bz2"
+
+
   # Install and configure Munge for host authentication
   - name: Ensure the munge key is set
     assert:
@@ -45,6 +63,7 @@
     loop:
       - slurm
       - slurm-perlapi
+      - slurm-torque
 
   - name: Make the Slurm Directories
     file:
@@ -67,15 +86,21 @@
       - { src: cgroup.conf.j2, dest: /etc/slurm/cgroup.conf }
       - { src: cgroup_allowed_devices_file.conf.j2, dest: 
             /etc/slurm/cgroup_allowed_devices_file.conf }
-
+    notify:
+      - Restart slurmd
+      - Restart slurmctld
+      - Restart slurmdbd
   
   # Install, start, and enable relevant services depending on role
   - when: slurm_run_slurmd
     block:
     - name: Install slurmd
       package:
-        name: slurm-slurmd
+        name: "{{ item }}"
         state: installed
+      loop:
+        - slurmd
+        - slurm-pam_slurm
 
     - name: Start and enable slurmd
       service:
@@ -114,14 +139,33 @@
 
   - when: slurm_run_slurmdbd
     block:
+    - name: Ensure the database password is set
+      assert:
+        that:
+          - "slurm_slurmdbd_dbpassword != ''"
+
     - name: Install slurmdbd
       package:
         name: slurm-slurmdbd
         state: installed
+    
+    - name: Render the Slurmdbd Config
+      template:
+        src: slurmdbd.conf.j2
+        dest: /etc/slurm/slurmdbd.conf
+      notify: Restart slurmdbd
 
     - name: Start and enable slurmdbd
       service:
         name: slurmdbd.service
         state: started
         enabled: True
+
+    - name: Open the slurmdbd port
+      firewalld:
+        port: "6819/tcp"
+        state: enabled
+        permanent: True
+        immediate: True
+
 

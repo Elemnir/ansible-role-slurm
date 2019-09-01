@@ -1,7 +1,22 @@
 ---
 
+- name: Restart slurmd
+  become: True
+  service:
+    name: slurmd
+    state: restarted
+  when: slurm_run_slurmd
+
 - name: Restart slurmctld
   become: True
   service:
     name: slurmctld
     state: restarted
+  when: slurm_run_slurmctld
+
+- name: Restart slurmdbd
+  become: True
+  service:
+    name: slurmdbd
+    state: restarted
+  when: slurm_run_slurmdbd

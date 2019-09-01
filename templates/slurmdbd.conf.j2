@@ -1,0 +1,35 @@
+#
+# {{ ansible_managed }}
+#
+DbdHost={{ slurm_slurmdbd_host }}
+
+#
+# Config Options
+#
+AuthType=auth/munge
+SlurmUser=slurm
+DebugLevel=4
+PidFile=/var/run/slurmdbd.pid
+PrivateData=accounts,users,usage,jobs
+TrackWCKey=yes
+
+#
+# Database info
+#
+StorageType=accounting_storage/mysql
+StorageHost={{ slurm_slurmdbd_dbhost }}
+StoragePort={{ slurm_slurmdbd_dbport }}
+StoragePass={{ slurm_slurmdbd_dbpassword }}
+StorageUser=slurm
+StorageLoc={{ slurm_slurmdbd_dbname }}
+
+#
+# Archive info
+#
+#ArchiveJobs=yes
+#ArchiveDir="/tmp"
+#ArchiveSteps=yes
+#ArchiveScript=
+#JobPurge=12
+#StepPurge=1
+#

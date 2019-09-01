@@ -30,6 +30,18 @@ StateSaveLocation=/var/spool/slurm/state
 SwitchType=switch/none
 TreeWidth=50
 
+{% if slurm_slurmdbd_host != '' %}
+#
+# Accounting Options
+#
+AccountingStorageHost={{ slurm_slurmdbd_host }}
+AccountingStorageType=accounting_storage/slurmdbd
+AccountingStorageEnforce=limits,qos
+JobAcctGatherType=jobacct_gather/linux
+
+{% endif %}
+
+
 #
 # Node Configurations
 #
