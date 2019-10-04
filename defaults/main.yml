@@ -8,7 +8,7 @@ slurm_build_download_url: "https://download.schedmd.com/slurm/slurm-19.05.2.tar.
 
 slurm_munge_key: ""
 
-slurm_repo_url: "https://repos.adamphoward.com/slurm/x86_64/el7/18.08.5-2/"
+slurm_repo_url: ""
 slurm_repo_gpgurl: ""
 
 slurm_run_slurmd: False
@@ -17,6 +17,9 @@ slurm_run_slurmdbd: False
 
 slurm_cluster_name: "cluster"
 slurm_slurmctld_hosts: []
+slurm_slurmdbd_host: ""
+slurm_slurmdbd_backuphost: ""
+
 
 slurm_slurmdbd_dbhost: "localhost"
 slurm_slurmdbd_dbport: 3306

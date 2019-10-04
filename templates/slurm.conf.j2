@@ -35,6 +35,10 @@ TreeWidth=50
 # Accounting Options
 #
 AccountingStorageHost={{ slurm_slurmdbd_host }}
+{% if slurm_slurmdbd_backuphost != '' %}
+AccountingStorageBackupHost={{ slurm_slurmdbd_backuphost }}
+{% endif %}
+
 AccountingStorageType=accounting_storage/slurmdbd
 AccountingStorageEnforce=limits,qos
 JobAcctGatherType=jobacct_gather/linux
