@@ -5,6 +5,7 @@
 
   # Build Slurm from source
   - tags: ['never', 'build-slurm']
+    when: '"build-slurm" in ansible_run_tags'
     block:
     - name: Install packages for the build
       package:
@@ -15,10 +16,10 @@
     - name: Download the source tarball
       get_url:
         url: "{{ slurm_build_download_url }}"
-        dest: "/var/tmp/slurm.tar.bz2"
+        dest: "/var/tmp/{{ slurm_build_download_url|basename }}"
 
     - name: Build the rpms
-      command: "rpmbuild -ta /var/tmp/slurm.tar.bz2"
+      shell: "rpmbuild -ta /var/tmp/{{ slurm_build_download_url|basename }}"
 
 
   # Install and configure Munge for host authentication

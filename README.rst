@@ -87,3 +87,10 @@ The following playbook will configure a cluster:
           PartitionName=batch Nodes=compute[01-10] MaxTime=10 Default=YES
       roles:
         - slurm
+
+
+-------------------------
+ Building the Slurm RPMS
+-------------------------
+
+This role provides a mechanism for automating the building of the Slurm RPMs that will be used during the install steps. To do so, set ``slurm_build_download_url`` to the appropriate version, and then run a playbook including the role with the tag ``build-slurm`` and limited to the hosts where unique builds are required. The resulting RPMS will be available in ``/root/rpmbuild`` for creating the repositories that ``slurm_repo_url`` will pointed at.
