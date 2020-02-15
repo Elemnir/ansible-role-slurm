@@ -115,6 +115,7 @@
         state: enabled
         permanent: True
         immediate: True
+      failed_when: False
 
 
   - when: slurm_run_slurmctld
