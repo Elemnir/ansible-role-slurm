@@ -1,10 +1,11 @@
 ---
 
 slurm_build_dependencies: [
-    "gcc", "rpm-build", "munge-devel", "readline-devel", "openssl-devel", "perl",
-    "pam-devel", "perl-ExtUtils-MakeMaker", "mariadb-devel", "lua-devel"
+    "gcc", "rpm-build", "munge-devel", "readline-devel", "python3",
+    "python3-devel", "openssl-devel", "perl", "pam-devel",
+    "perl-ExtUtils-MakeMaker", "mariadb-devel", "lua-devel", "hwloc-devel"
 ]
-slurm_build_download_url: "https://download.schedmd.com/slurm/slurm-19.05.2.tar.bz2"
+slurm_build_download_url: "https://download.schedmd.com/slurm/slurm-20.11.0.tar.bz2"
 
 slurm_munge_key: ""
 
